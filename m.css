@@ -1,0 +1,37 @@
+
+* {
+    box-sizing: border-box;
+}
+
+nav {
+    width: 100%;
+    height: 80px;
+    background-color: hotpink;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+.button{
+  width: 70px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: pink;
+  color: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+.button2{
+  width: 70px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: pink;
+  color: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Katalog & Interaktiv Panel | Zargarlik Elit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --gold: #c5a059; --dark-gold: #aa843f; --dark: #111111; --light-bg: #FAF8F5; }
+        body { background-color: var(--light-bg); font-family: 'Segoe UI', sans-serif; }
+        .navbar { background-color: var(--dark) !important; border-bottom: 3px solid var(--gold); padding: 15px 0; }
+        .navbar-brand { font-weight: 900; letter-spacing: 2px; color: var(--gold) !important; font-size: 26px; }
+        .nav-link { color: #ddd !important; font-weight: 500; margin: 0 10px; }
+        .nav-link:hover, .nav-link.active { color: var(--gold) !important; }
+        
+        /* Kartochka dizayni */
+        .product-card { background: white; border: 1px solid #EFECE6; border-radius: 24px; overflow: hidden; transition: 0.4s; height: 100%; display: flex; flex-direction: column; cursor: pointer; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(197,160,89,0.15); border-color: var(--gold); }
+        
+        .img-container { height: 250px; background: #fff; display: flex; align-items: center; justify-content: center; position: relative; border-bottom: 1px solid #F5F2EB; padding: 10px; overflow: hidden; }
+        .img-container img { max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 12px; transition: 0.5s; }
+        .product-card:hover .img-container img { transform: scale(1.05); }
+        
+        .click-hint { position: absolute; bottom: 10px; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; padding: 4px 10px; border-radius: 20px; opacity: 0; transition: 0.3s; }
+        .product-card:hover .click-hint { opacity: 1; }
+        
+        .tag-metal { position: absolute; top: 16px; right: 16px; background: rgba(17, 17, 17, 0.85); color: var(--gold); font-size: 11px; font-weight: bold; padding: 6px 14px; border-radius: 30px; text-transform: uppercase; z-index: 10; }
+        .btn-gold { background: var(--gold); color: white; border: none; font-weight: 700; border-radius: 12px; padding: 12px; width: 100%; transition: 0.3s; }
+        .btn-gold:hover { background: var(--dark-gold); }
+        
+        /* Yon panel */
+        .filter-sidebar { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #EFECE6; position: sticky; top: 100px; }
+        .category-badge { cursor: pointer; padding: 14px; border-radius: 12px; background: #F5F2EB; display: block; margin-bottom: 10px; font-weight: 600; transition: 0.3s; }
+        .category-badge.active, .category-badge:hover { background: #FFF9EE; color: var(--dark-gold); border-left: 5px solid var(--gold); }
+
+        /* Chizish paneli */
+        #drawingBoardContainer { background: white; border-radius: 24px; padding: 25px; border: 2px dashed var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        #paintCanvas { background: #fff; border: 1px solid #ddd; border-radius: 16px; cursor: crosshair; display: block; width: 100%; height: 420px; }
+        .canvas-btn { border-radius: 10px; font-weight: 600; padding: 10px 20px; }
+
+        /* Modal oyna */
+        .custom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); z-index: 9999; display: none; align-items: center; justify-content: center; }
+        .custom-modal-box { background: white; border-radius: 24px; max-width: 650px; width: 90%; padding: 30px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: zoomIn 0.3s ease; }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .modal-close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 24px; color: #777; cursor: pointer; }
+        .modal-img-container { height: 260px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 16px; border: 1px solid #F5F2EB; }
+        .modal-img-container img { max-height: 100%; max-width: 100%; object-fit: contain; }
+
+        /* O'lchamlar */
+        .size-badge { display: inline-block; width: 40px; height: 40px; line-height: 38px; text-align: center; border: 1px solid #ddd; border-radius: 50%; font-size: 14px; font-weight: 600; cursor: pointer; margin-right: 8px; margin-top: 5px; background: #fff; transition: 0.2s; }
+        .size-badge.active { background: var(--dark); color: var(--gold); border-color: var(--dark); }
+        .size-badge.out-of-stock { background: #f5f5f5; color: #ccc; border-color: #eee; position: relative; cursor: not-allowed; }
+        .size-badge.out-of-stock::after { content: ''; position: absolute; width: 100%; height: 1px; background: #ccc; top: 50%; left: 0; transform: rotate(-45deg); }
+        
+        .modal-alert-message { font-size: 13px; font-weight: 600; margin-top: 10px; min-height: 24px; }
+        .about-section { margin-top: 80px; padding: 60px 0; border-top: 1px solid #EFECE6; }
+        .about-icon-box { width: 50px; height: 50px; background: #FFF9EE; color: var(--gold); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 15px; }
+
+        /* MULTILLASH VIZUAL EFFEKTI */
+        @keyframes pulseEffect {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.5); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(197, 160, 89, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); }
+        }
+        .pulse-cart {
+            animation: pulseEffect 1.5s infinite ease-in-out;
+            border: 2px solid var(--gold) !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigatsiya -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fa-solid fa-gem me-2"></i>ZARGARLIK ELIT</a>
+            <div class="collapse navbar-collapse" id="mainMenu">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Bosh sahifa</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="catalog.html">Katta Katalog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#aboutSection">Biz haqimizda</a></li>
+                </ul>
+                <div class="d-flex w-50 align-items-center gap-2">
+                    <input type="text" id="megaSearch" class="form-control rounded-pill" placeholder="Katalogdan qidirish...">
+                    <!-- YORDAM TUGMASI -->
+                    <button class="btn btn-outline-warning btn-sm rounded-pill px-3 flex-shrink-0" onclick="showHelpModal()">
+                        <i class="fa-solid fa-lightbulb me-1"></i> Yordam
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Katalog bo'limi -->
+    <div class="container my-5">
+        <div class="row g-4">
+            <!-- Yon panel -->
+            <div class="col-12 col-lg-3">
+                <div class="filter-sidebar">
+                    <h5 class="fw-bold mb-4 border-bottom pb-2"><i class="fa-solid fa-sliders me-2"></i>Filtrlar</h5>
+                    <div class="category-badge active" id="cat-all" onclick="setCategory('all')">Barcha galereya (30)</div>
+                    <div class="category-badge" id="cat-tilla" onclick="setCategory('tilla')">Tilla buyumlar (24)</div>
+                    <div class="category-badge" id="cat-kumush" onclick="setCategory('kumush')">Kumush buyumlar (6)</div>
+                    
+                    <div class="category-badge text-center bg-dark text-warning border-0 mt-4 py-3 shadow-sm" id="cat-draw" onclick="setCategory('draw')">
+                        <i class="fa-solid fa-pen-ruler me-2"></i>O'zingiz chizing
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Asosiy oyna -->
+            <div class="col-12 col-lg-9">
+                <div id="productsDisplayBlock">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-bold m-0" id="catalogTitle">Premium Eksklyuziv Kolleksiya</h3>
+                        <span class="badge bg-dark text-warning p-2 px-3 rounded-pill" id="productCount">30 ta buyum</span>
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="megaGrid"></div>
+                </div>
+
+                <!-- CHIZISH PANELI -->
+                <div id="drawingBoardContainer" class="d-none">
+                    <h3 class="fw-bold text-dark mb-2"><i class="fa-solid fa-magic text-warning me-2"></i>O'z dizayningizni chizing</h3>
+                    <p class="text-muted small mb-4">Xohlagan zargarlik buyumingiz shaklini chizing va biz uni sizga eksklyuziv yasab beramiz!</p>
+                    <div class="d-flex flex-wrap gap-3 align-items-center mb-3 p-3 bg-light rounded-3">
+                        <div>
+                            <label class="small fw-bold d-block mb-1">Rang:</label>
+                            <input type="color" id="brushColor" class="form-control form-control-color" value="#c5a059">
+                        </div>
+                        <div>
+                            <label class="small fw-bold d-block mb-1">Qalam qalinligi:</label>
+                            <input type="range" id="brushWidth" min="1" max="20" value="5" class="form-range" style="width: 120px;">
+                        </div>
+                        <div class="ms-auto pt-3">
+                            <button class="btn btn-danger canvas-btn me-2" onclick="clearCanvas()"><i class="fa-solid fa-trash-can me-1"></i> Tozalash</button>
+                            <button class="btn btn-success canvas-btn" onclick="saveDesign()"><i class="fa-solid fa-paper-plane me-1"></i> Dizaynni yuborish</button>
+                        </div>
+                    </div>
+                    <canvas id="paintCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOSHIDA KO'RINADIGAN ESLATMA PANEL -->
+        <div class="row mt-5" id="hintSection">
+            <div class="col-12 col-lg-8 mx-auto">
+                <div class="alert alert-warning text-center p-4 border-0 rounded-4 shadow-sm">
+                    <i class="fa-solid fa-circle-exclamation text-warning display-6 d-block mb-3"></i>
+                    <h5 class="fw-bold text-dark">Eslatma panel</h5>
+                    <p class="text-muted mb-0">Buyurtma berish formasini ochish uchun avval yuqoridagi katalogdan o'zingizga yoqqan biror bir buyumni tanlab, o'lchamini belgilang va <strong>Savatchaga qo'shish</strong> tugmasini bosing.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAVATCHA & BUYURTMA FORMASI (MAHSULOT TANLANGANDA MILTILLAB OCHILADI) -->
+        <div class="row mt-5 d-none" id="cartSection">
+            <div class="col-12 col-lg-8 mx-auto">
+                <div class="card p-4 shadow-sm border-0 rounded-4 bg-white">
+                    <h4 class="fw-bold text-dark mb-4 border-bottom pb-2"><i class="fa-solid fa-shopping-cart text-warning me-2"></i> Tanlangan buyum (Savatcha)</h4>
+                    <div class="d-flex align-items-center bg-light p-3 rounded-3 mb-4">
+                        <img id="cartItemImg" src="" alt="" style="width: 70px; height: 70px; object-fit: contain; border-radius: 8px;">
+                        <div class="ms-3 flex-grow-1">
+                            <h6 class="fw-bold mb-0" id="cartItemName">Mahsulot nomi</h6>
+                            <small class="text-muted">Tanlangan o'lcham: <strong id="cartItemSize" class="text-dark">17</strong></small>
+                        </div>
+                        <h5 class="text-danger fw-bold mb-0" id="cartItemPrice">0 so'm</h5>
+                    </div>
+                    
+                    <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-file-invoice me-2"></i>Buyurtma ma'lumotlarini to'ldiring</h5>
+                    <form id="orderForm" onsubmit="submitOrder(event)">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">To'liq ismingiz:</label>
+                            <input type="text" class="form-control" placeholder="Ism va familiyangiz" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Manzilingiz:</label>
+                            <input type="text" class="form-control" placeholder="Viloyat, Tuman, Uy raqami" required>
+                        </div>
+                        
+                        <!-- FAQAT RAQAM VA "+" YAZILADIGAN MUKAMMAL PHONE INPUT + YORDAMCHI MATN -->
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold" for="userPhone">Telefon raqamingiz:</label>
+                            <input type="tel" 
+                                   id="userPhone" 
+                                   class="form-control" 
+                                   placeholder="+998901234567" 
+                                   pattern="^\+998\d{9}$" 
+                                   oninput="this.value = this.value.replace(/[^0-9+]/g, '')" 
+                                   required>
+                            <div class="form-text text-danger small mt-1 fw-semibold">
+                                * Diqqat: Bu maydonga faqat raqamlar yoziladi! Harflar kiritish taqiqlangan.
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-dark w-100 py-3 rounded-3 text-warning fw-bold">BUYURTMANI TASDIQLASH</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- BIZ HAQIMIZDA -->
+        <div class="about-section" id="aboutSection">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-5 text-center mb-4 mb-md-0">
+                    <h2 class="fw-bold text-dark mb-3">Zargarlik Elit</h2>
+                    <p class="text-muted">Biz 10 yildan ortiq vaqt davomida mijozlarimizga eng yuqori sifatli tilla va kumushdan yasalgan eksklyuziv zargarlik buyumlarini taqdim etib kelmoqdamiz.</p>
+                </div>
+                <div class="col-12 col-md-7">
+                    <div class="row g-4">
+                        <div class="col-12 col-sm-6">
+                            <div class="about-icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+                            <h6 class="fw-bold text-dark">100% Sifat Kafolati</h6>
+                            <p class="text-muted small mb-0">Barcha buyumlarimiz davlat probasi va maxsus sifat sertifikatiga ega.</p>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="about-icon-box"><i class="fa-solid fa-truck-fast"></i></div>
+                            <h6 class="fw-bold text-dark">Tezkor Yetkazib Berish</h6>
+                            <p class="text-muted small mb-0">O'zbekiston bo'ylab buyurtmalar eshigingizgacha xavfsiz yetkaziladi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL OYNA -->
+    <div class="custom-modal-overlay" id="productModal" onclick="closeModal(event)">
+        <div class="custom-modal-box" onclick="event.stopPropagation()">
+            <button class="modal-close-btn" onclick="hideModal()">&times;</button>
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6">
+                    <div class="modal-img-container"><img id="modalProductImg" src="" alt="Mahsulot"></div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <h4 class="fw-bold text-dark mb-2" id="modalProductName">Mahsulot nomi</h4>
+                    <div class="mb-3">
+                        <label class="fw-bold text-secondary small d-block mb-1">O'LCHAMLAR:</label>
+                        <div class="d-flex flex-wrap" id="modalSizesContainer"></div>
+                        <div class="modal-alert-message" id="modalAlertMsg"></div>
+                    </div>
+                    <h3 class="text-danger fw-bold mb-4" id="modalProductPrice">0 so'm</h3>
+                    <button class="btn btn-gold py-2.5 shadow-sm" onclick="addToCart()">Savatchaga qo'shish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dbProducts = [
+            { id: 1, cat: "tilla", name: "Premium Klassik Nikoh Uzugi", price: "4,500,000 so'm", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMpt0WL9GomLS7OZhpVKFnHUuBnLhOz_3XwQ&s", sizes: [{val: 16, available: true}, {val: 17, available: true}, {val: 18, available: false}] },
+            { id: 2, cat: "tilla", name: "Nafis Brilliant Ko'zli Tilla Uzuk", price: "6,800,000 so'm", img: "https://images.uzum.uz/d2hec3b4eu2v4hbula5g/original.jpg", sizes: [{val: 16, available: false}, {val: 17, available: true}, {val: 18, available: true}] },
+            { id: 3, cat: "tilla", name: "Eksklyuziv Oltin Bo'yin zanjiri", price: "12,400,000 so'm", img: "https://images.uzum.uz/d2najm34eu2h0tmp5me0/original.jpg", sizes: [{val: 45, available: true}, {val: 50, available: true}] },
+            { id: 4, cat: "tilla", name: "Delardi Move Link Premium Sirg'a", price: "16,500,000 so'm", img: "https://thum.fonon.uz/unsafe/fit-in/400x400/smart/filters:format(webp)/products/2db0a22e-884a-4e72-8ca2-b6997200a39e.jpg", sizes: [{val: "S", available: true}, {val: "M", available: false}] },
+            { id: 5, cat: "tilla", name: "Qirollik Toj Uslubidagi Uzuk", price: "7,500,000 so'm", img: "https://delardi.uz/assets/products-gallery/ring-701604-yg/AN019..9.3OGLU_YG_101.jpg", sizes: [{val: 17, available: true}, {val: 18, available: false}] },
+            { id: 6, cat: "tilla", name: "Elegant Shoda Oltin Sirg'alar", price: "8,900,000 so'm", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK7ErQu8CYIr7mBYWrjarRXvBRCVMTp3CF1g&s", sizes: [{val: "M", available: true}] },
+            { id: 7, cat: "tilla", name: "ZargarShop Brilliantli Oltin Uzuk", price: "19,800,000 so'm", img: "https://zargarshop.com/cdn/shop/files/CC02488.jpg?v=1742196190&width=1445", sizes: [{val: 16, available: true}, {val: 17, available: true}] },
+            { id: 8, cat: "tilla", name: "Nafis Bargsimon Tilla Sirg'alar", price: "6,100,000 so'm", img: "https://zargarshop.com/cdn/shop/files/67a9f7bd76117.jpg?v=1741073746", sizes: [{val: "S", available: true}] },
+            { id: 9, cat: "tilla", name: "Nafis Brilliant Ko'zli Minimalist Kulon", price: "5,100,000 so'm", img: "https://images.uzum.uz/d85s0qjsv8vo2t0fo9p0/t_product_540_high.jpg", sizes: [{val: 45, available: true}] },
+            { id: 10, cat: "tilla", name: "Uzum Minimal Diamond Geometrik Sirg'a", price: "5,200,000 so'm", img: "https://images.uzum.uz/cr3cckfiraat934qdtr0/t_product_low.jpg", sizes: [{val: "M", available: true}] },
+            { id: 11, cat: "tilla", name: "Olmos Ko'zli Tilla Toj Uzuk", price: "42,000,000 so'm", img: "https://images.uzum.uz/cujm0245j42bjc4d4kv0/original.jpg", sizes: [{val: 17, available: true}] },
+            { id: 12, cat: "tilla", name: "ZargarShop Hashamatli Brilliant Marjon", price: "34,500,000 so'm", img: "https://zargarshop.com/cdn/shop/files/preview_images/9fe17a8233c84a8bb9ef03feb117a818.thumbnail.0000000000.jpg?v=1742196437&width=1445", sizes: [{val: 50, available: true}] },
+            { id: 13, cat: "tilla", name: "Premium Italiya Oltin To'plami", price: "28,000,000 so'm", img: "https://zargarshop.com/cdn/shop/files/67a9f59e159ea.jpg?v=1741073719", sizes: [{val: 17, available: true}] },
+            { id: 14, cat: "tilla", name: "Elegant Sharqona Oltin Sirg'alar", price: "14,200,000 so'm", img: "https://zargarshop.com/cdn/shop/files/67a9f75d00c91.jpg?v=1741073716", sizes: [{val: "M", available: true}] },
+            { id: 15, cat: "tilla", name: "Eksklyuziv Brilliant Shoda Marjon", price: "48,500,000 so'm", img: "https://images.uzum.uz/crrusdri153t30un9lcg/original.jpg", sizes: [{val: 50, available: true}] },
+            { id: 16, cat: "tilla", name: "Premium Ko'zli L luks Oltin Uzuk", price: "15,800,000 so'm", img: "https://images.uzum.uz/d72ksac3obpjedc4f5cg/t_product_540_high.jpg", sizes: [{val: 17, available: true}] },
+            { id: 17, cat: "kumush", name: "Kristall Shop Premium Luks Kumush To'plam", price: "3,250,000 so'm", img: "https://storage-imgs-cache.kristall-shop.ru/250/T06_V13_M01_C04_G13470[C08]__1020742_PH3.webp", sizes: [{val: 16, available: true}, {val: 17, available: true}] },
+            { id: 18, cat: "kumush", name: "Klassik Yaltiroq Kumush To'plam", price: "1,950,000 so'm", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_0mUJmfdZa40gpyETXKlLSgUIyuaGOc1pHLfeOtgDgJXDAv-YT9RS4Pk&s=10", sizes: [{val: 17, available: true}] },
+            { id: 19, cat: "kumush", name: "Sirkon Toshli Kumush Bilaguzuk", price: "1,200,000 so'm", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwxlbPOp4ZCSZvyigPex36soASi-EVXcs1CXv2P06_sxx7Q3GUHc_3pas&s=10", sizes: [{val: 18, available: true}] },
+            { id: 20, cat: "tilla", name: "Premium Yupqa Tilla Bo'yin Zanjiri", price: "10,500,000 so'm", img: "https://images.uzum.uz/d84qo53sv8vo2t0fc19g/t_product_540_high.jpg", sizes: [{val: 50, available: true}] },
+            { id: 21, cat: "tilla", name: "Luks Brilliant Qoplamali Oltin Uzuk", price: "24,000,000 so'm", img: "https://images.uzum.uz/d8267iq1146tv06vt20g/t_product_540_high.jpg", sizes: [{val: 17, available: true}] },
+            { id: 22, cat: "tilla", name: "Elegant Geometrik To'rtburchak Oltin Sirg'a", price: "13,400,000 so'm", img: "https://images.uzum.uz/d7qvrk49g1ktqmljetjg/t_product_540_high.jpg", sizes: [{val: "M", available: true}] },
+            { id: 23, cat: "tilla", name: "Hashamatli Toj Dizayn Oltin Uzuk", price: "19,500,000 so'm", img: "https://images.uzum.uz/d6p8v9os9rf3ubr1ha2g/t_product_540_high.jpg", sizes: [{val: 18, available: true}] },
+            { id: 24, cat: "tilla", name: "Olcha Elite Dizayn Qirollik Uzugi", price: "36,000,000 so'm", img: "https://olcha.uz/image/675x900/products/supplier/stores/1/2023-05-03/o6FKTLO2o6l4pBBzVoZRnRdAO1LZV2OqvBqqz6JMLzyIocczWjmUtNr0pahd.jpg", sizes: [{val: 18, available: true}] },
+            { id: 25, cat: "tilla", name: "Premium Brilliant Ko'zli Yassi Uzuk", price: "13,800,000 so'm", img: "https://images.uzum.uz/cnm83u04idugcqegs2i0/original.jpg", sizes: [{val: 19, available: true}] },
+            { id: 26, cat: "tilla", name: "Eksklyuziv Rossiya Oltin Sirg'alari", price: "22,000,000 so'm", img: "https://www.rosuvelirtorg.ru/uploads/common/45/451faf0c-6294-49f4-9e64-2a1082f12a60/3ddb99e242584612b53cfa63700ff717-f8f762ab668711ef8c72441ea13be534.jpg", sizes: [{val: "M", available: true}] },
+            { id: 27, cat: "tilla", name: "Golden Taurus Elegant Oltin Marjon", price: "29,400,000 so'm", img: "https://golden-taurus.ru/upload/iblock/4af/r3hm0q0t6ecqp3tmkzfort7jvx2k380f.JPG", sizes: [{val: 50, available: true}] },
+            { id: 28, cat: "kumush", name: "Minimalist Kumush Zanjir", price: "850,000 so'm", img: "https://images.uzum.uz/clof41d6sfhgee0m6icg/original.jpg", sizes: [{val: 45, available: true}] },
+            { id: 29, cat: "kumush", name: "Yaltiroq Geometrik Kumush Sirg'a", price: "980,000 so'm", img: "https://zargarshop.com/cdn/shop/files/CC02537.jpg?v=1741087454&width=533", sizes: [{val: "M", available: true}] },
+            { id: 30, cat: "kumush", name: "Yurak Shaklidagi Kumush Kulon", price: "1,100,000 so'm", img: "https://goldexpert.uz/wp-content/uploads/2025/05/52-removebg-preview.png", sizes: [{val: 17, available: true}] }
+        ];
+
+        let selectedProduct = null;
+        let selectedSize = null;
+
+        const megaGrid = document.getElementById('megaGrid');
+        const productModal = document.getElementById('productModal');
+        const productsBlock = document.getElementById('productsDisplayBlock');
+        const drawingBlock = document.getElementById('drawingBoardContainer');
+        const hintSection = document.getElementById('hintSection');
+        const cartSection = document.getElementById('cartSection');
+
+        function render(items) {
+            megaGrid.innerHTML = '';
+            document.getElementById('productCount').innerText = `${items.length} ta buyum`;
+            items.forEach(p => {
+                megaGrid.innerHTML += `
+                    <div class="col">
+                        <div class="card product-card shadow-sm" onclick="showModal(${p.id})">
+                            <div class="img-container">
+                                <span class="tag-metal">${p.cat.toUpperCase()}</span>
+                                <img src="${p.img}" alt="${p.name}">
+                                <span class="click-hint"><i class="fa-solid fa-expand me-1"></i> Tanlash</span>
+                            </div>
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold text-dark mb-2" style="font-size: 14px; min-height:44px; display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical; overflow:hidden;">${p.name}</h5>
+                                <h4 class="text-danger fw-bold mt-2" style="font-size: 16px;">${p.price}</h4>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function setCategory(cat) {
+            document.querySelectorAll('.category-badge').forEach(b => b.classList.remove('active'));
+            if(document.getElementById(`cat-${cat}`)) document.getElementById(`cat-${cat}`).classList.add('active');
+
+            if (cat === 'draw') {
+                productsBlock.classList.add('d-none');
+                drawingBlock.classList.remove('d-none');
+                cartSection.classList.add('d-none');
+                hintSection.classList.add('d-none');
+                initCanvas();
+            } else {
+                drawingBlock.classList.add('d-none');
+                productsBlock.classList.remove('d-none');
+                if(!selectedProduct) {
+                    hintSection.classList.remove('d-none');
+                }
+                const filtered = cat === 'all' ? dbProducts : dbProducts.filter(p => p.cat === cat);
+                render(filtered);
+            }
+        }
+
+        function showModal(id) {
+            selectedProduct = dbProducts.find(p => p.id === id);
+            selectedSize = null;
+            document.getElementById('modalProductImg').src = selectedProduct.img;
+            document.getElementById('modalProductName').innerText = selectedProduct.name;
+            document.getElementById('modalProductPrice').innerText = selectedProduct.price;
+            
+            const sizesContainer = document.getElementById('modalSizesContainer');
+            const alertMsg = document.getElementById('modalAlertMsg');
+            sizesContainer.innerHTML = '';
+            alertMsg.style.display = "none";
+
+            selectedProduct.sizes.forEach(s => {
+                const classStock = s.available ? '' : 'out-of-stock';
+                sizesContainer.innerHTML += `<span class="size-badge ${classStock}" onclick="selectModalSize(this, '${s.val}', ${s.available})">${s.val}</span>`;
+            });
+            productModal.style.display = "flex";
+        }
+
+        function selectModalSize(element, sizeValue, isAvailable) {
+            const alertMsg = document.getElementById('modalAlertMsg');
+            document.querySelectorAll('#modalSizesContainer .size-badge').forEach(b => b.classList.remove('active'));
+
+            if (!isAvailable) {
+                alertMsg.style.color = "#dc3545";
+                alertMsg.innerText = "❌ Bu o'lcham tugagan!";
+                alertMsg.style.display = "block";
+                selectedSize = null;
+            } else {
+                element.classList.add('active');
+                alertMsg.style.color = "#198754";
+                alertMsg.innerText = `✅ O'lcham ${sizeValue} tanlandi.`;
+                alertMsg.style.display = "block";
+                selectedSize = sizeValue;
+            }
+        }
+
+        // SAVATCHAGA QO'SHISH FUNKSIYASI (MILTILLASH EFFEKTI BILAN)
+        function addToCart() {
+            if (!selectedSize) {
+                alert("Iltimos, avval o'lcham tanlang!");
+                return;
+            }
+            hideModal();
+            document.getElementById('cartItemImg').src = selectedProduct.img;
+            document.getElementById('cartItemName').innerText = selectedProduct.name;
+            document.getElementById('cartItemSize').innerText = selectedSize;
+            document.getElementById('cartItemPrice').innerText = selectedProduct.price;
+
+            hintSection.classList.add('d-none');
+            cartSection.classList.remove('d-none');
+            
+            // Diqqatni jalb qilish uchun miltillash qo'shiladi
+            const cartCard = cartSection.querySelector('.card');
+            cartCard.classList.add('pulse-cart');
+            
+            // Formaga bosilganda miltillash o'chadi
+            document.getElementById('orderForm').addEventListener('click', () => {
+                cartCard.classList.remove('pulse-cart');
+            });
+
+            cartSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function submitOrder(event) {
+            event.preventDefault();
+            alert("🎉 Buyurtmangiz muvaffaqiyatli qabul qilindi!");
+            document.getElementById('orderForm').reset();
+            selectedProduct = null;
+            selectedSize = null;
+            cartSection.classList.add('d-none');
+            hintSection.classList.remove('d-none');
+        }
+
+        function hideModal() { productModal.style.display = "none"; }
+        function closeModal(e) { if(e.target === productModal) hideModal(); }
+
+        // BILDIRISHNOMA (YORDAM) OYNASI FUNKSIYASI
+        function showHelpModal() {
+            alert("💡 SAYTDAN FOYDALANISH YO'RIQNOMASI:\n\n" +
+                  "1. Katalog bo'limidan o'zingizga yoqqan zargarlik buyumini tanlang.\n" +
+                  "2. Ochilgan oynadan mos o'lchamni belgilang va 'Savatchaga qo'shish' tugmasini bosing.\n" +
+                  "3. Pastda avtomatik ochiladigan buyurtma formasiga ism, manzil va telefon raqamingizni kiriting.\n\n" +
+                  "* Eslatma: Telefon raqami maydoniga faqat raqam yoziladi, harflar avtomatik o'chiriladi!");
+        }
+
+        // CANVAS TIZIMI
+        const canvas = document.getElementById('paintCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        function initCanvas() {
+            canvas.width = canvas.parentElement.clientWidth - 40;
+            canvas.height = 420;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+        }
+
+        canvas.addEventListener('mousedown', (e) => { isDrawing = true; draw(e); });
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => { isDrawing = false; ctx.beginPath(); });
+
+        function draw(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+            ctx.lineWidth = document.getElementById('brushWidth').value;
+            ctx.strokeStyle = document.getElementById('brushColor').value;
+            let rect = canvas.getBoundingClientRect();
+            let x = (e.clientX || e.touches[0].clientX) - rect.left;
+            let y = (e.clientY || e.touches[0].clientY) - rect.top;
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+        function saveDesign() { alert('🎉 Dizayn muvaffaqiyatli yuborildi!'); clearCanvas(); }
+
+        document.getElementById('megaSearch').addEventListener('input', (e) => {
+            const txt = e.target.value.toLowerCase();
+            render(dbProducts.filter(p => p.name.toLowerCase().includes(txt)));
+        });
+
+        render(dbProducts);
+    </script>
+</body>
+</html>

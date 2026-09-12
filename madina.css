@@ -1,0 +1,303 @@
+/* Umumiy Sozlamalar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #030812;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* Dashboard Konteyneri */
+.dashboard {
+    width: 100%;
+    max-width: 900px;
+    background: #050e1e;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #102a45;
+    padding-bottom: 15px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo h1 {
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: #e2e8f0;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+.btn-mission {
+    background: linear-gradient(135deg, #0066ff, #0052cc);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
+    transition: 0.3s;
+}
+
+.btn-mission:hover {
+    transform: translateY(-2px);
+}
+
+/* Grid Tizimi (3 talik kartalar uchun) */
+.grid-3-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.card {
+    background: #07152e;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.card-icon {
+    font-size: 35px;
+    margin: 10px 0;
+}
+
+/* Rangli Borderlar */
+.card-power { border-color: #00cc66; color: #00cc66; }
+.card-power p { color: #a3e635; }
+
+.card-camera { border-color: #0066ff; color: #0066ff; }
+.card-camera p { color: #38bdf8; }
+
+.card-sensors { border-color: #ffaa00; color: #ffaa00; }
+.card-sensors p { color: #fde047; }
+
+/* Robot Status Screen */
+.status-screen {
+    background: #06183a;
+    border: 1px solid #0055ff;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: inset 0 0 15px rgba(0, 85, 255, 0.2);
+}
+
+.status-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.robot-avatar {
+    font-size: 60px;
+    background: #0b2554;
+    padding: 15px;
+    border-radius: 50%;
+}
+
+.status-info h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #38bdf8;
+    letter-spacing: 0.5px;
+}
+
+.status-info p {
+    font-size: 14px;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.dot-green { background: #00cc66; }
+.dot-blue { background: #0066ff; }
+.dot-yellow { background: #ffaa00; }
+
+/* Radar qismi (Sodda ko'rinishi) */
+.radar-screen {
+    width: 80px;
+    height: 80px;
+    border: 1px dashed #0055ff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.radar-circle {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 85, 255, 0.4);
+    border-radius: 50%;
+}
+
+/* Harakat Tugmalari (Forward, Stop, Backward) */
+.btn-control {
+    background: #07152e;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid transparent;
+}
+
+.btn-control:hover { background: #0c2246; }
+
+.btn-forward { border-color: #00cc66; color: #00cc66; }
+.btn-stop { border-color: #ff3333; color: #ff3333; }
+.btn-backward { border-color: #0066ff; color: #0066ff; }
+
+.arrow, .square-stop {
+    font-size: 30px;
+    margin-top: 5px;
+}
+
+/* Battery Section */
+.battery-section {
+    background: #07152e;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.battery-label {
+    font-size: 16px;
+}
+
+.text-green { color: #00cc66; }
+
+.progress-bar-container {
+    width: 100%;
+    background: #030812;
+    height: 14px;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00cc66, #a3e635);
+    border-radius: 7px;
+}
+
+/* Sensor Statistics */
+.sensor-stats {
+    background: #051329;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.sensor-stats h3 {
+    font-size: 14px;
+    color: #a855f7;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #071a3a;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.stat-icon {
+    font-size: 22px;
+}
+
+.stat-title {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.stat-value {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* Switch (Dark Mode uchun) */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+cursor: not-allowed;
+    opacity: 0.7; 
+
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px; width: 14px;
+    left: 3px; bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider { background-color: #0066ff; }
+input:checked + .slider:before { transform: translateX(20px); }

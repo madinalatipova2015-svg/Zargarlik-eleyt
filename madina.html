@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Control Panel</title>
+    <link rel="stylesheet" href="madina.css">
+</head>
+<body>
+
+    <div class="dashboard">
+        
+        <!-- Header Section -->
+        <header class="header">
+            <div class="logo">
+                <span class="icon">🤖</span>
+                <h1>ROBOT CONTROL PANEL</h1>
+            </div>
+            <div class="header-controls">
+                <div class="dark-mode-toggle">
+                    <span>🌙 Dark Mode</span>
+                    <label class="switch">
+             <input type="checkbox" checked disabled>                        
+                    </label>
+                </div>
+                <button class="btn-mission">🚀 START MISSION</button>
+            </div>
+        </header>
+
+        <!-- Top Grid: Power, Camera, Sensors -->
+        <div class="grid-3-col">
+            <div class="card card-power">
+                <h3>POWER</h3>
+                <div class="card-icon">🔋</div>
+                <p>System Active</p>
+            </div>
+            <div class="card card-camera">
+                <h3>CAMERA</h3>
+                <div class="card-icon">📷</div>
+                <p>Live Feed</p>
+            </div>
+            <div class="card card-sensors">
+                <h3>SENSORS</h3>
+                <div class="card-icon">📡</div>
+                <p>8 Sensors Online</p>
+            </div>
+        </div>
+
+        <!-- Robot Status Screen -->
+        <div class="status-screen">
+            <div class="status-left">
+                <div class="robot-avatar">🤖</div>
+                <div class="status-info">
+                    <h2>ROBOT STATUS SCREEN</h2>
+                    <p><span class="dot dot-green"></span> Status: Operational</p>
+                    <p><span class="dot dot-blue"></span> Mode: Autonomous</p>
+                    <p><span class="dot dot-yellow"></span> Location: Sector 7G</p>
+                </div>
+            </div>
+            <div class="radar-screen">
+                <div class="radar-circle"></div>
+            </div>
+        </div>
+
+        <!-- Movement Controls -->
+        <div class="grid-3-col">
+            <div class="btn-control btn-forward">
+                <h3>FORWARD</h3>
+                <div class="arrow">⬆️</div>
+            </div>
+            <div class="btn-control btn-stop">
+                <h3>STOP</h3>
+                <div class="square-stop">🛑</div>
+            </div>
+            <div class="btn-control btn-backward">
+                <h3>BACKWARD</h3>
+                <div class="arrow">⬇️</div>
+            </div>
+        </div>
+
+        <!-- Battery Progress Bar -->
+        <div class="battery-section">
+            <div class="battery-label">
+                <span>🔋 Battery: <strong class="text-green">85%</strong></span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 85%;"></div>
+            </div>
+        </div>
+
+        <!-- Sensor Statistics -->
+        <div class="sensor-stats">
+            <h3>SENSOR STATISTICS</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-icon">🌡️</span>
+                    <div>
+                        <p class="stat-title">Temperature</p>
+                        <p class="stat-value">32°C</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">💧</span>
+                    <div>
+                        <p class="stat-title">Humidity</p>
+                        <p class="stat-value">45%</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">⏱️</span>
+                    <div>
+                        <p class="stat-title">Pressure</p>
+                        <p class="stat-value">101 kPa</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🔊</span>
+                    <div>
+                        <p class="stat-title">Distance</p>
+                        <p class="stat-value">120 cm</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">☀️</span>
+                    <div>
+                        <p class="stat-title">Light</p>
+                        <p class="stat-value">300 lux</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">📊</span>
+                    <div>
+                        <p class="stat-title">Sound</p>
+                        <p class="stat-value">40 dB</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zargarlik Elit | Bosh Sahifa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --gold: #c5a059; --dark-gold: #aa843f; --dark: #111111; --light-bg: #FAF8F5; }
+        body { background-color: var(--light-bg); font-family: 'Segoe UI', sans-serif; }
+        .navbar { background-color: var(--dark) !important; border-bottom: 3px solid var(--gold); padding: 15px 0; }
+        .navbar-brand { font-weight: 900; letter-spacing: 2px; color: var(--gold) !important; font-size: 26px; }
+        .nav-link { color: #ddd !important; font-weight: 500; margin: 0 10px; transition: 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--gold) !important; }
+        
+        /* Katta Korusel Banner */
+        .hero-slider { height: 550px; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1500&q=80') center/cover; display: flex; align-items: center; justify-content: center; color: white; text-align: center; }
+        .hero-slider h1 { font-size: 60px; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: #fff; }
+        
+        /* Katta Kategoriya Bloklari */
+        .promo-box { position: relative; overflow: hidden; border-radius: 24px; height: 320px; border: 2px solid #EFECE6; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.4s; display: block; text-decoration: none; }
+        .promo-box:hover { transform: translateY(-8px); border-color: var(--gold); box-shadow: 0 15px 35px rgba(197,160,89,0.2); }
+        
+        /* Rasmlarni to'g'ri joylashtirish va effektlar */
+        .promo-1 { background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)), url('https://goldexpert.uz/wp-content/uploads/2025/05/52-removebg-preview.png') center/contain no-repeat #fff; }
+        .promo-2 { background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)), url('https://www.islamicbazaar.co.uk/cdn/shop/products/il_fullxfull.2734729629_eggc.jpg?v=1646070508') center/contain no-repeat #fff; }
+        
+        .promo-text { position: absolute; bottom: 30px; left: 30px; right: 30px; color: var(--dark); background: rgba(255,255,255,0.95); padding: 20px; border-radius: 16px; border-left: 6px solid var(--gold); transition: 0.3s; backdrop-filter: blur(5px); }
+        .promo-box:hover .promo-text { background: var(--dark); color: white; }
+        .promo-box:hover .promo-text p { color: #ccc !important; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigatsiya -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fa-solid fa-gem me-2"></i>ZARGARLIK ELIT</a>
+            <div class="collapse navbar-collapse" id="mainMenu">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Bosh sahifa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="catalog.html">Katta Katalog</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <!-- YORDAM TUGMASI (Katalog bilan bir xil dizaynda) -->
+                    <button class="btn btn-outline-warning btn-sm rounded-pill px-3" onclick="showHelpModal()">
+                        <i class="fa-solid fa-lightbulb me-1"></i> Yordam
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Asosiy Banner -->
+    <div class="hero-slider">
+        <div class="container px-4">
+            <h1 class="display-3 fw-bold mb-3">Qirollik Kolleksiyasi</h1>
+            <p class="fs-4 text-warning mb-5">Oʻzbekistondagi eng yirik tilla va kumush buyumlar onlayn koʻrgazmasi</p>
+            <a href="catalog.html" class="btn btn-warning btn-lg px-5 py-3 rounded-pill fw-bold text-dark shadow-lg">KATALOGGA OʻTISH <i class="fa-solid fa-arrow-right ms-2"></i></a>
+        </div>
+    </div>
+
+    <!-- Eksklyuziv Bo'limlar -->
+    <div class="container my-5 py-5">
+        <div class="text-center mb-5">
+            <span class="text-uppercase tracking-wider small fw-bold text-muted" style="letter-spacing: 2px;">Kategoriyalar</span>
+            <h2 class="fw-bold mt-1">Premium Yoʻnalishlar</h2>
+            <div style="width: 60px; height: 3px; background: var(--gold); margin: 15px auto 0;"></div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Tilla Bo'limi -->
+            <div class="col-12 col-md-6">
+                <a href="catalog.html" class="promo-box promo-1" onclick="localStorage.setItem('filterCategory', 'tilla')">
+                    <div class="promo-text shadow-sm">
+                        <h4 class="fw-bold mb-1">Oltin va Tilla</h4>
+                        <p class="small text-muted m-0">585 va 750 probali sof Italiya tilla zanjirlari hamda uzuklari</p>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Kumush Bo'limi -->
+            <div class="col-12 col-md-6">
+                <a href="catalog.html" class="promo-box promo-2" onclick="localStorage.setItem('filterCategory', 'kumush')">
+                    <div class="promo-text shadow-sm">
+                        <h4 class="fw-bold mb-1">Eski va Yangi Kumushlar</h4>
+                        <p class="small text-muted m-0">925 probali nafis dizayndagi erkaklar va ayollar to'plamlari</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Yordam oynasi yo'riqnomasi
+        function showHelpModal() { 
+            alert("💡 Bosh sahifa yordam paneli:\n\n1. Katalog bo'limiga o'tish uchun yuqoridagi tugmani bosing.\n2. Kategoriyalarni tanlash orqali to'g'ridan-to'g'ri filtrlangan mahsulotlarga o'tishingiz mumkin."); 
+        }
+    </script>
+</body>
+</html>
