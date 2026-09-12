@@ -122,7 +122,19 @@
                 <!-- CHIZISH PANELI -->
                 <div id="drawingBoardContainer" class="d-none">
                     <h3 class="fw-bold text-dark mb-2"><i class="fa-solid fa-magic text-warning me-2"></i>O'z dizayningizni chizing</h3>
-                    <p class="text-muted small mb-4">Xohlagan zargarlik buyumingiz shaklini chizing va biz uni sizga eksklyuziv yasab beramiz!</p>
+                    <p class="text-muted small mb-3">Xohlagan zargarlik buyumingiz shaklini chizing yoki andozadan foydalaning!</p>
+                    
+                    <!-- ANDOZALAR TUGMALARI -->
+                    <div class="mb-3 p-3 bg-light rounded-3">
+                        <label class="small fw-bold d-block mb-2"><i class="fa-solid fa-shapes text-warning me-1"></i> Andoza (Shablon) tanlang:</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('ring')">💍 Uzuk</button>
+                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('earring')">✨ Sirg'a</button>
+                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('necklace')">📿 Marjon</button>
+                            <button class="btn btn-outline-secondary btn-sm rounded-pill" onclick="clearCanvas()">📄 Toza varaq</button>
+                        </div>
+                    </div>
+
                     <div class="d-flex flex-wrap gap-3 align-items-center mb-3 p-3 bg-light rounded-3">
                         <div>
                             <label class="small fw-bold d-block mb-1">Rang:</label>
@@ -446,7 +458,7 @@
                   "* Eslatma: Telefon raqami maydoniga faqat raqam yoziladi, harflar avtomatik o'chiriladi!");
         }
 
-        // CANVAS TIZIMI & TELEGRAM'GA DIZAYNNI YUBORISH
+        // CANVAS TIZIMI & ANDOZALAR
         const canvas = document.getElementById('paintCanvas');
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
@@ -462,6 +474,47 @@
         function clearCanvas() {
             ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // ANDOZALARNI CHIZISH FUNKSIYASI
+        function loadTemplate(type) {
+            clearCanvas();
+            ctx.save();
+            ctx.strokeStyle = "#dddddd"; // Shablon rangi (och kulrang)
+            ctx.lineWidth = 4;
+
+            if (type === 'ring') {
+                // Uzuk halqasi
+                ctx.beginPath();
+                ctx.arc(canvas.width / 2, canvas.height / 2 + 30, 70, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                // Uzuk tosh o'rni
+                ctx.beginPath();
+                ctx.rect(canvas.width / 2 - 25, canvas.height / 2 - 65, 50, 30);
+                ctx.stroke();
+            } else if (type === 'earring') {
+                // Sirg'a ilmog'i
+                ctx.beginPath();
+                ctx.arc(canvas.width / 2, canvas.height / 2 - 80, 20, Math.PI, 0);
+                ctx.stroke();
+                
+                // Sirg'a tanasi (tomchi shakli)
+                ctx.beginPath();
+                ctx.arc(canvas.width / 2, canvas.height / 2 + 10, 50, 0, Math.PI * 2);
+                ctx.stroke();
+            } else if (type === 'necklace') {
+                // Zanjir
+                ctx.beginPath();
+                ctx.arc(canvas.width / 2, canvas.height / 2 - 120, 150, 0.25 * Math.PI, 0.75 * Math.PI);
+                ctx.stroke();
+                
+                // Marjon kuloni
+                ctx.beginPath();
+                ctx.arc(canvas.width / 2, canvas.height / 2 + 30, 40, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+            ctx.restore();
         }
 
         canvas.addEventListener('mousedown', (e) => { isDrawing = true; draw(e); });
