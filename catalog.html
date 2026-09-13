@@ -14,7 +14,6 @@
         .nav-link { color: #ddd !important; font-weight: 500; margin: 0 10px; }
         .nav-link:hover, .nav-link.active { color: var(--gold) !important; }
         
-        /* Kartochka dizayni */
         .product-card { background: white; border: 1px solid #EFECE6; border-radius: 24px; overflow: hidden; transition: 0.4s; height: 100%; display: flex; flex-direction: column; cursor: pointer; }
         .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(197,160,89,0.15); border-color: var(--gold); }
         
@@ -29,17 +28,14 @@
         .btn-gold { background: var(--gold); color: white; border: none; font-weight: 700; border-radius: 12px; padding: 12px; width: 100%; transition: 0.3s; }
         .btn-gold:hover { background: var(--dark-gold); }
         
-        /* Yon panel */
         .filter-sidebar { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #EFECE6; position: sticky; top: 100px; }
         .category-badge { cursor: pointer; padding: 14px; border-radius: 12px; background: #F5F2EB; display: block; margin-bottom: 10px; font-weight: 600; transition: 0.3s; }
         .category-badge.active, .category-badge:hover { background: #FFF9EE; color: var(--dark-gold); border-left: 5px solid var(--gold); }
 
-        /* Chizish paneli */
         #drawingBoardContainer { background: white; border-radius: 24px; padding: 25px; border: 2px dashed var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         #paintCanvas { background: #fff; border: 1px solid #ddd; border-radius: 16px; cursor: crosshair; display: block; width: 100%; height: 420px; }
         .canvas-btn { border-radius: 10px; font-weight: 600; padding: 10px 20px; }
 
-        /* Modal oyna */
         .custom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); z-index: 9999; display: none; align-items: center; justify-content: center; }
         .custom-modal-box { background: white; border-radius: 24px; max-width: 650px; width: 90%; padding: 30px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: zoomIn 0.3s ease; }
         @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -48,7 +44,6 @@
         .modal-img-container { height: 260px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 16px; border: 1px solid #F5F2EB; }
         .modal-img-container img { max-height: 100%; max-width: 100%; object-fit: contain; }
 
-        /* O'lchamlar */
         .size-badge { display: inline-block; width: 40px; height: 40px; line-height: 38px; text-align: center; border: 1px solid #ddd; border-radius: 50%; font-size: 14px; font-weight: 600; cursor: pointer; margin-right: 8px; margin-top: 5px; background: #fff; transition: 0.2s; }
         .size-badge.active { background: var(--dark); color: var(--gold); border-color: var(--dark); }
         .size-badge.out-of-stock { background: #f5f5f5; color: #ccc; border-color: #eee; position: relative; cursor: not-allowed; }
@@ -58,21 +53,16 @@
         .about-section { margin-top: 80px; padding: 60px 0; border-top: 1px solid #EFECE6; }
         .about-icon-box { width: 50px; height: 50px; background: #FFF9EE; color: var(--gold); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 15px; }
 
-        /* PULSE EFFEKTI */
         @keyframes pulseEffect {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.5); }
             70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(197, 160, 89, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); }
         }
-        .pulse-cart {
-            animation: pulseEffect 1.5s infinite ease-in-out;
-            border: 2px solid var(--gold) !important;
-        }
+        .pulse-cart { animation: pulseEffect 1.5s infinite ease-in-out; border: 2px solid var(--gold) !important; }
     </style>
 </head>
 <body>
 
-    <!-- Navigatsiya -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow">
         <div class="container">
             <a class="navbar-brand" href="index.html"><i class="fa-solid fa-gem me-2"></i>ZARGARLIK ELIT</a>
@@ -92,10 +82,8 @@
         </div>
     </nav>
 
-    <!-- Katalog bo'limi -->
     <div class="container my-5">
         <div class="row g-4">
-            <!-- Yon panel -->
             <div class="col-12 col-lg-3">
                 <div class="filter-sidebar">
                     <h5 class="fw-bold mb-4 border-bottom pb-2"><i class="fa-solid fa-sliders me-2"></i>Filtrlar</h5>
@@ -109,7 +97,6 @@
                 </div>
             </div>
             
-            <!-- Asosiy oyna -->
             <div class="col-12 col-lg-9">
                 <div id="productsDisplayBlock">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -119,22 +106,25 @@
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="megaGrid"></div>
                 </div>
 
-                <!-- CHIZISH PANELI -->
                 <div id="drawingBoardContainer" class="d-none">
                     <h3 class="fw-bold text-dark mb-2"><i class="fa-solid fa-magic text-warning me-2"></i>O'z dizayningizni chizing</h3>
                     <p class="text-muted small mb-3">O'zingizga yoqqan andozani tanlang va uni xohlaganingizcha bezating!</p>
                     
-                    <!-- KENGAYTIRILGAN ANDOZALAR TUGMALARI -->
+                    <!-- 12 TA YANGI ANDOZALAR TUGMALARI -->
                     <div class="mb-3 p-3 bg-light rounded-3">
-                        <label class="small fw-bold d-block mb-2"><i class="fa-solid fa-shapes text-warning me-1"></i> Andoza (Shablon) tanlang:</label>
+                        <label class="small fw-bold d-block mb-2"><i class="fa-solid fa-shapes text-warning me-1"></i> Andoza tanlang:</label>
                         <div class="d-flex flex-wrap gap-2">
-                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('ring')">💍 Klassik Uzuk</button>
+                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('ring')">💍 Brilliant Uzuk</button>
                             <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('crown_ring')">👑 Toj Uzuk</button>
-                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('earring')">✨ Klassik Sirg'a</button>
+                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('earring')">✨ Tomchi Sirg'a</button>
                             <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('flower_earring')">🌸 Gullik Sirg'a</button>
-                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('necklace')">📿 Marjon</button>
+                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('necklace')">📿 Zanjirli Marjon</button>
                             <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('heart_pendant')">💖 Yurak Kulon</button>
+                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('butterfly_pendant')">🦋 Kapalak Kulon</button>
                             <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('bracelet')">💫 Bilaguzuk</button>
+                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('broad_bracelet')">💎 Keng Bilaguzuk</button>
+                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('drop_brooch')">☀️ Broshka</button>
+                            <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('cross_pendant')">✝️ Luks Xoch Kulon</button>
                             <button class="btn btn-outline-dark btn-sm rounded-pill" onclick="loadTemplate('tiara')">👑 Qirollik Toji</button>
                             <button class="btn btn-outline-secondary btn-sm rounded-pill" onclick="clearCanvas()">📄 Toza varaq</button>
                         </div>
@@ -159,7 +149,6 @@
             </div>
         </div>
 
-        <!-- ESLATMA PANEL -->
         <div class="row mt-5" id="hintSection">
             <div class="col-12 col-lg-8 mx-auto">
                 <div class="alert alert-warning text-center p-4 border-0 rounded-4 shadow-sm">
@@ -170,7 +159,6 @@
             </div>
         </div>
 
-        <!-- SAVATCHA & BUYURTMA FORMASI -->
         <div class="row mt-5 d-none" id="cartSection">
             <div class="col-12 col-lg-8 mx-auto">
                 <div class="card p-4 shadow-sm border-0 rounded-4 bg-white">
@@ -204,7 +192,7 @@
                                    oninput="this.value = this.value.replace(/[^0-9+]/g, '')" 
                                    required>
                             <div class="form-text text-danger small mt-1 fw-semibold">
-                                * Diqqat: Bu maydonga faqat raqamlar yoziladi! Harflar kiritish taqiqlangan.
+                                * Diqqat: Bu maydonga faqat raqamlar yoziladi!
                             </div>
                         </div>
                         
@@ -214,7 +202,6 @@
             </div>
         </div>
 
-        <!-- BIZ HAQIMIZDA -->
         <div class="about-section" id="aboutSection">
             <div class="row align-items-center">
                 <div class="col-12 col-md-5 text-center mb-4 mb-md-0">
@@ -239,7 +226,6 @@
         </div>
     </div>
 
-    <!-- MODAL OYNA -->
     <div class="custom-modal-overlay" id="productModal" onclick="closeModal(event)">
         <div class="custom-modal-box" onclick="event.stopPropagation()">
             <button class="modal-close-btn" onclick="hideModal()">&times;</button>
@@ -262,7 +248,6 @@
     </div>
 
     <script>
-        // TELEGRAM BOT SOZLAMALARI
         const BOT_TOKEN = '8950782953:AAHNUOrtBhRakpWtchgmTtc7AoflJgQLC_g';
         const CHAT_ID = '6900330017';
 
@@ -412,7 +397,6 @@
             cartSection.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // TELEGRAM'GA BUYURTMANI YUBORISH
         async function submitOrder(event) {
             event.preventDefault();
             
@@ -459,11 +443,10 @@
             alert("💡 SAYTDAN FOYDALANISH YO'RIQNOMASI:\n\n" +
                   "1. Katalog bo'limidan o'zingizga yoqqan zargarlik buyumini tanlang.\n" +
                   "2. Ochilgan oynadan mos o'lchamni belgilang va 'Savatchaga qo'shish' tugmasini bosing.\n" +
-                  "3. Pastda avtomatik ochiladigan buyurtma formasiga ism, manzil va telefon raqamingizni kiriting.\n\n" +
-                  "* Eslatma: Telefon raqami maydoniga faqat raqam yoziladi, harflar avtomatik o'chiriladi!");
+                  "3. Pastda avtomatik ochiladigan buyurtma formasiga ism, manzil va telefon raqamingizni kiriting.");
         }
 
-        // CANVAS TIZIMI & KENGAYTIRILGAN ANDOZALAR
+        // CANVAS TIZIMI & 12 TA BIR-BIRIDAN DETALLASHGAN ANDOZALAR
         const canvas = document.getElementById('paintCanvas');
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
@@ -481,111 +464,214 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        // 8 TA ANDOZANI CHIZISH FUNKSIYASI
         function loadTemplate(type) {
             clearCanvas();
             ctx.save();
-            ctx.strokeStyle = "#bbbbbb"; // Shablon rangi (och kulrang)
-            ctx.lineWidth = 3;
+            ctx.strokeStyle = "#a0a0a0";
+            ctx.fillStyle = "#a0a0a0";
+            ctx.lineWidth = 2;
 
             const cx = canvas.width / 2;
             const cy = canvas.height / 2;
 
             if (type === 'ring') {
-                // Klassik Uzuk
                 ctx.beginPath();
-                ctx.arc(cx, cy + 30, 70, 0, Math.PI * 2);
+                ctx.arc(cx, cy + 35, 65, 0, Math.PI * 2);
+                ctx.arc(cx, cy + 35, 52, 0, Math.PI * 2, true);
                 ctx.stroke();
+
                 ctx.beginPath();
-                ctx.rect(cx - 25, cy - 65, 50, 30);
+                ctx.moveTo(cx - 30, cy - 35); ctx.lineTo(cx + 30, cy - 35);
+                ctx.lineTo(cx + 45, cy - 65); ctx.lineTo(cx, cy - 95);
+                ctx.lineTo(cx - 45, cy - 65); ctx.closePath();
                 ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(cx - 30, cy - 35); ctx.lineTo(cx, cy - 65);
+                ctx.lineTo(cx + 30, cy - 35); ctx.lineTo(cx + 45, cy - 65);
+                ctx.lineTo(cx - 45, cy - 65); ctx.lineTo(cx - 30, cy - 35);
+                ctx.moveTo(cx, cy - 65); ctx.lineTo(cx, cy - 95);
+                ctx.moveTo(cx - 45, cy - 65); ctx.lineTo(cx, cy - 95);
+                ctx.moveTo(cx + 45, cy - 65); ctx.lineTo(cx, cy - 95);
+                ctx.stroke();
+
             } else if (type === 'crown_ring') {
-                // Toj Shaklidagi Uzuk
                 ctx.beginPath();
-                ctx.arc(cx, cy + 40, 70, 0, Math.PI * 2);
+                ctx.arc(cx, cy + 45, 65, 0, Math.PI * 2);
+                ctx.arc(cx, cy + 45, 53, 0, Math.PI * 2, true);
                 ctx.stroke();
-                
+
                 ctx.beginPath();
-                ctx.moveTo(cx - 60, cy - 30);
-                ctx.lineTo(cx - 60, cy - 60);
-                ctx.lineTo(cx - 30, cy - 40);
-                ctx.lineTo(cx, cy - 75);
-                ctx.lineTo(cx + 30, cy - 40);
-                ctx.lineTo(cx + 60, cy - 60);
-                ctx.lineTo(cx + 60, cy - 30);
-                ctx.closePath();
+                ctx.moveTo(cx - 65, cy - 20); ctx.lineTo(cx - 65, cy - 55);
+                ctx.lineTo(cx - 35, cy - 35); ctx.lineTo(cx, cy - 75);
+                ctx.lineTo(cx + 35, cy - 35); ctx.lineTo(cx + 65, cy - 55);
+                ctx.lineTo(cx + 65, cy - 20); ctx.closePath();
                 ctx.stroke();
+
+                [-65, 0, 65].forEach(xOff => {
+                    let yVal = xOff === 0 ? cy - 75 : cy - 55;
+                    ctx.beginPath(); ctx.arc(cx + xOff, yVal, 6, 0, Math.PI * 2); ctx.stroke();
+                });
+
             } else if (type === 'earring') {
-                // Klassik Sirg'a
+                ctx.beginPath(); ctx.arc(cx, cy - 100, 20, Math.PI, 0); ctx.lineTo(cx + 20, cy - 60); ctx.stroke();
+                ctx.beginPath(); ctx.arc(cx, cy - 50, 7, 0, Math.PI * 2); ctx.arc(cx, cy - 30, 7, 0, Math.PI * 2); ctx.stroke();
+
                 ctx.beginPath();
-                ctx.arc(cx, cy - 80, 20, Math.PI, 0);
+                ctx.moveTo(cx, cy - 15);
+                ctx.bezierCurveTo(cx - 50, cy + 30, cx - 45, cy + 100, cx, cy + 100);
+                ctx.bezierCurveTo(cx + 45, cy + 100, cx + 50, cy + 30, cx, cy - 15);
                 ctx.stroke();
+
                 ctx.beginPath();
-                ctx.arc(cx, cy + 10, 50, 0, Math.PI * 2);
+                ctx.moveTo(cx, cy + 5);
+                ctx.bezierCurveTo(cx - 30, cy + 40, cx - 25, cy + 85, cx, cy + 85);
+                ctx.bezierCurveTo(cx + 25, cy + 85, cx + 30, cy + 40, cx, cy + 5);
                 ctx.stroke();
+
             } else if (type === 'flower_earring') {
-                // Gullik Sirg'a
-                ctx.beginPath();
-                ctx.arc(cx, cy - 100, 15, Math.PI, 0);
-                ctx.stroke();
-                
-                ctx.beginPath();
-                ctx.arc(cx, cy - 10, 20, 0, Math.PI * 2);
-                ctx.stroke();
-                
-                for (let i = 0; i < 6; i++) {
-                    let angle = (i * Math.PI) / 3;
-                    let px = cx + Math.cos(angle) * 45;
-                    let py = (cy - 10) + Math.sin(angle) * 45;
-                    ctx.beginPath();
-                    ctx.arc(px, py, 18, 0, Math.PI * 2);
-                    ctx.stroke();
+                ctx.beginPath(); ctx.arc(cx, cy - 110, 15, Math.PI, 0); ctx.lineTo(cx + 15, cy - 70); ctx.stroke();
+                ctx.beginPath(); ctx.arc(cx, cy, 25, 0, Math.PI * 2); ctx.stroke();
+
+                for (let i = 0; i < 8; i++) {
+                    let angle = (i * Math.PI) / 4;
+                    let px = cx + Math.cos(angle) * 55;
+                    let py = cy + Math.sin(angle) * 55;
+                    ctx.beginPath(); ctx.arc(px, py, 20, 0, Math.PI * 2); ctx.stroke();
+                    ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI * 2); ctx.stroke();
                 }
+
             } else if (type === 'necklace') {
-                // Zanjirli Marjon
+                ctx.beginPath(); ctx.arc(cx, cy - 130, 170, 0.23 * Math.PI, 0.77 * Math.PI); ctx.stroke();
+                for (let a = 0.25 * Math.PI; a <= 0.75 * Math.PI; a += 0.05 * Math.PI) {
+                    let mx = cx + Math.cos(a) * 170;
+                    let my = (cy - 130) + Math.sin(a) * 170;
+                    ctx.beginPath(); ctx.arc(mx, my, 5, 0, Math.PI * 2); ctx.stroke();
+                }
+                ctx.beginPath(); ctx.arc(cx, cy + 50, 45, 0, Math.PI * 2); ctx.arc(cx, cy + 50, 32, 0, Math.PI * 2, true); ctx.stroke();
                 ctx.beginPath();
-                ctx.arc(cx, cy - 120, 150, 0.25 * Math.PI, 0.75 * Math.PI);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.arc(cx, cy + 30, 40, 0, Math.PI * 2);
-                ctx.stroke();
+                ctx.moveTo(cx, cy + 20); ctx.lineTo(cx + 25, cy + 50); ctx.lineTo(cx, cy + 80); ctx.lineTo(cx - 25, cy + 50);
+                ctx.closePath(); ctx.stroke();
+
             } else if (type === 'heart_pendant') {
-                // Yurak Kulon
+                ctx.beginPath(); ctx.arc(cx, cy - 140, 160, 0.28 * Math.PI, 0.72 * Math.PI); ctx.stroke();
+                ctx.beginPath(); ctx.rect(cx - 8, cy - 10, 16, 20); ctx.stroke();
                 ctx.beginPath();
-                ctx.arc(cx, cy - 110, 140, 0.3 * Math.PI, 0.7 * Math.PI);
+                ctx.moveTo(cx, cy + 90);
+                ctx.bezierCurveTo(cx - 85, cy + 20, cx - 75, cy - 50, cx, cy - 10);
+                ctx.bezierCurveTo(cx + 75, cy - 50, cx + 85, cy + 20, cx, cy + 90);
                 ctx.stroke();
-                
+
                 ctx.beginPath();
                 ctx.moveTo(cx, cy + 70);
-                ctx.bezierCurveTo(cx - 70, cy + 10, cx - 60, cy - 50, cx, cy - 20);
-                ctx.bezierCurveTo(cx + 60, cy - 50, cx + 70, cy + 10, cx, cy + 70);
+                ctx.bezierCurveTo(cx - 65, cy + 15, cx - 55, cy - 35, cx, cy - 3);
+                ctx.bezierCurveTo(cx + 55, cy - 35, cx + 65, cy + 15, cx, cy + 70);
                 ctx.stroke();
+
             } else if (type === 'bracelet') {
-                // Bilaguzuk
                 ctx.beginPath();
-                ctx.ellipse(cx, cy, 140, 60, 0, 0, Math.PI * 2);
+                ctx.ellipse(cx, cy - 20, 150, 50, 0, 0, Math.PI * 2);
+                ctx.ellipse(cx, cy - 20, 142, 44, 0, 0, Math.PI * 2);
                 ctx.stroke();
-                
-                [-80, 0, 80].forEach(offset => {
+
+                const offsets = [-100, -50, 0, 50, 100];
+                offsets.forEach((off, idx) => {
+                    let px = cx + off;
+                    let py = cy + 25 + (Math.abs(off) / 10);
+                    ctx.beginPath(); ctx.moveTo(px, py - 15); ctx.lineTo(px, py); ctx.stroke();
                     ctx.beginPath();
-                    ctx.arc(cx + offset, cy + 60, 12, 0, Math.PI * 2);
+                    if (idx % 2 === 0) { ctx.arc(px, py + 12, 12, 0, Math.PI * 2); }
+                    else { ctx.rect(px - 10, py + 2, 20, 20); }
                     ctx.stroke();
                 });
+
             } else if (type === 'tiara') {
-                // Qirollik Toji
+                ctx.beginPath(); ctx.rect(cx - 150, cy + 40, 300, 16); ctx.stroke();
                 ctx.beginPath();
-                ctx.moveTo(cx - 140, cy + 50);
-                ctx.lineTo(cx + 140, cy + 50);
+                ctx.moveTo(cx - 145, cy + 40); ctx.lineTo(cx - 145, cy - 30);
+                ctx.lineTo(cx - 90, cy + 10); ctx.lineTo(cx - 45, cy - 60);
+                ctx.lineTo(cx, cy - 100); ctx.lineTo(cx + 45, cy - 60);
+                ctx.lineTo(cx + 90, cy + 10); ctx.lineTo(cx + 145, cy - 30);
+                ctx.lineTo(cx + 145, cy + 40); ctx.stroke();
+
+                [-145, -45, 0, 45, 145].forEach(x => {
+                    let y = (x === 0) ? cy - 112 : (Math.abs(x) === 45 ? cy - 72 : cy - 42);
+                    ctx.beginPath();
+                    ctx.moveTo(x + cx, y - 10); ctx.lineTo(x + cx + 8, y);
+                    ctx.lineTo(x + cx, y + 10); ctx.lineTo(x + cx - 8, y);
+                    ctx.closePath(); ctx.stroke();
+                });
+
+            } else if (type === 'butterfly_pendant') {
+                ctx.beginPath(); ctx.arc(cx, cy - 140, 160, 0.3 * Math.PI, 0.7 * Math.PI); ctx.stroke();
+                ctx.beginPath(); ctx.ellipse(cx, cy, 6, 35, 0, 0, Math.PI * 2); ctx.stroke();
+
+                ctx.beginPath();
+                ctx.ellipse(cx - 40, cy - 20, 45, 28, -Math.PI / 6, 0, Math.PI * 2);
+                ctx.ellipse(cx + 40, cy - 20, 45, 28, Math.PI / 6, 0, Math.PI * 2);
                 ctx.stroke();
-                
+
                 ctx.beginPath();
-                ctx.moveTo(cx - 130, cy + 50);
-                ctx.lineTo(cx - 130, cy - 20);
-                ctx.lineTo(cx - 70, cy + 10);
-                ctx.lineTo(cx, cy - 70);
-                ctx.lineTo(cx + 70, cy + 10);
-                ctx.lineTo(cx + 130, cy - 20);
-                ctx.lineTo(cx + 130, cy + 50);
+                ctx.ellipse(cx - 28, cy + 25, 30, 20, Math.PI / 6, 0, Math.PI * 2);
+                ctx.ellipse(cx + 28, cy + 25, 30, 20, -Math.PI / 6, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(cx - 45, cy - 20, 10, 0, Math.PI * 2);
+                ctx.arc(cx + 45, cy - 20, 10, 0, Math.PI * 2);
+                ctx.stroke();
+
+            } else if (type === 'broad_bracelet') {
+                ctx.beginPath();
+                ctx.rect(cx - 140, cy - 60, 280, 120);
+                ctx.stroke();
+
+                for (let x = -110; x <= 110; x += 44) {
+                    ctx.beginPath();
+                    ctx.moveTo(cx + x, cy - 60); ctx.lineTo(cx + x + 20, cy); ctx.lineTo(cx + x, cy + 60);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(cx + x, cy, 8, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+
+            } else if (type === 'drop_brooch') {
+                ctx.beginPath(); ctx.arc(cx, cy - 30, 35, 0, Math.PI * 2); ctx.stroke();
+                ctx.beginPath(); ctx.arc(cx, cy - 30, 20, 0, Math.PI * 2); ctx.stroke();
+
+                for (let i = 0; i < 12; i++) {
+                    let angle = (i * Math.PI) / 6;
+                    let x1 = cx + Math.cos(angle) * 35;
+                    let y1 = (cy - 30) + Math.sin(angle) * 35;
+                    let x2 = cx + Math.cos(angle) * 65;
+                    let y2 = (cy - 30) + Math.sin(angle) * 65;
+                    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+                    ctx.beginPath(); ctx.arc(x2, y2, 4, 0, Math.PI * 2); ctx.stroke();
+                }
+
+                [-30, 0, 30].forEach(off => {
+                    ctx.beginPath();
+                    ctx.moveTo(cx + off, cy + 35);
+                    ctx.lineTo(cx + off, cy + 65);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(cx + off, cy + 75, 10, 0, Math.PI * 2);
+                    ctx.stroke();
+                });
+
+            } else if (type === 'cross_pendant') {
+                ctx.beginPath(); ctx.arc(cx, cy - 130, 160, 0.28 * Math.PI, 0.72 * Math.PI); ctx.stroke();
+
+                ctx.beginPath();
+                ctx.rect(cx - 15, cy - 40, 30, 120);
+                ctx.rect(cx - 45, cy - 15, 90, 30);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(cx, cy - 25, 8, 0, Math.PI * 2);
+                ctx.arc(cx, cy + 65, 8, 0, Math.PI * 2);
+                ctx.arc(cx - 30, cy, 8, 0, Math.PI * 2);
+                ctx.arc(cx + 30, cy, 8, 0, Math.PI * 2);
                 ctx.stroke();
             }
 
@@ -638,7 +724,6 @@
             }, 'image/png');
         }
 
-        // Boshlanishida barcha mahsulotlarni chiqarish
         render(dbProducts);
     </script>
 </body>
